@@ -1,9 +1,10 @@
 import React from "react";
+import Loading from "./Loading";
 
 export default function App() {
   return (
-    <div className="container">
-      <h1 className="bg-pink-200 text-purple-800 text-lg container px-20">Hello my friend </h1>
-    </div>
+    <>
+      <Loading />
+    </>
   );
 }
