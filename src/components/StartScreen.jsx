@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function StartScreen() {
+export default function StartScreen({ dispatch, lengthQusetin }) {
   return (
     <>
       <div className="title flex flex-col justify-center mt-14">
@@ -12,11 +12,14 @@ export default function StartScreen() {
             Welcome to The React Quiz!😍
           </h2>
           <p className="text-center font-bold m-7 text-[18px]">
-            15 questions to test your React mastery
+            <span>{lengthQusetin}</span> questions to test your React mastery
           </p>
         </div>
         <div className="flex justify-center">
-          <button className="bg-yellow-300 w-32 h-14 rounded-full mt-6 font-bold">
+          <button
+            className="bg-yellow-300 w-32 h-14 rounded-full mt-6 font-bold"
+            onClick={() => dispatch({ type: "start" })}
+          >
             Les't Start⚛️
           </button>
         </div>
