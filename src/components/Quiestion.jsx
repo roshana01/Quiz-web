@@ -3,7 +3,7 @@ import React from "react";
 export default function Quiestion() {
   return (
     <>
-      <div className="flex w-full h-[500px]  justify-center">
+      <div className="flex w-full h-[500px]  justify-center ">
         <div className="flex flex-col ">
           <div className="flex justify-center mt-20">
             <progress
