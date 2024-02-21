@@ -12,7 +12,7 @@ export default function Error() {
           />
         </div>
         <h1 className="text-center mt-20 text-[2em]  font-thin">
-          ❌There was an error fecthing questions.
+          ❌There was an error fetching questions.
         </h1>
       </div>
     </>
