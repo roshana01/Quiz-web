@@ -11,7 +11,11 @@
   font-weight: 400;
   font-style: nor
 } */
-.loading-title{
+.loading-title {
   font-size: 20px;
 
+}
+
+.answer {
+  transform: translateX(2rem);
 }
