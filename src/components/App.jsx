@@ -1,24 +1,43 @@
 import React, { useEffect, useReducer } from "react";
 import Loading from "./Loading";
 import StartScreen from "./StartScreen";
-import Quiestion from "./Quiestion";
+import Question from "./Question";
 import Error from "./Error";
+import Progress from "./Progress";
+import NextButton from "./NextButton";
 
 const initialState = {
-  quiestions: [],
+  questions: [],
   //
   status: "loading",
+  index: 0,
+  answer: null,
+  points: 0,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "getData":
-      return { ...state, quiestions: action.payload, status: "ready" };
-
-    case "erorrFild":
+      return { ...state, questions: action.payload, status: "ready" };
+      // field
+    case "errorField":
       return { ...state, status: "error" };
     case "start":
       return { ...state, status: "active" };
+    case "newAnswer":
+      const question = state.questions.at(state.index);
+
+      return {
+        ...state,
+        answer: action.payload,
+        //in ghesmato copy karadm
+        points:
+          action.payload === question.correctOption
+            ? state.points + question.points
+            : state.points,
+      };
+    case "next":
+      return { ...state, index: state.index + 1, answer: null };
     default:
       break;
   }
@@ -26,8 +45,10 @@ const reducer = (state, action) => {
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { quiestions, status } = state;
-  const lengthQusetin = quiestions.length;
+  const { questions, status, index, answer, points } = state;
+  const lengthQuestion = questions.length;
+  const maxPoint = questions.reduce((acc, cur) => acc + cur.points, 0);
+  // console.log(maxPoint);
 
   useEffect(() => {
     (async () => {
@@ -37,32 +58,42 @@ export default function App() {
 
         dispatch({ type: "getData", payload: data });
       } catch (error) {
-        dispatch({ type: "erorrFild" });
+        dispatch({ type: "errorField" });
       }
     })();
   }, []);
 
- 
   return (
     <>
-      <div className="contanier w-[100%] h-[100vh] bg-yellow-50  flex flex-col">
+      <div className="container w-[100%] h-[100vh] bg-yellow-50  flex flex-col">
         {status === "loading" ? (
           <Loading />
         ) : status === "error" ? (
           <Error />
         ) : status === "ready" ? (
-          <StartScreen
-            dispatch={dispatch}
-            lengthQusetin={lengthQusetin}
-          />
+          <StartScreen dispatch={dispatch} lengthQuestion={lengthQuestion} />
         ) : status === "active" ? (
-          <Quiestion />
+          <>
+            <Progress
+              index={index}
+              points={points}
+              answer={answer}
+              maxPoint={maxPoint}
+              lengthQuestion={lengthQuestion}
+            />
+            <Question
+              questions={questions[index]}
+              answer={answer}
+              dispatch={dispatch}
+            />
+            <NextButton dispatch={dispatch} />
+          </>
         ) : (
           ""
         )}
         {/* <Loading /> */}
         {/* <StartScreen /> */}
-        {/* <Quiestion/> */}
+        {/* <Question/> */}
         {/* <Error /> */}
       </div>
     </>
