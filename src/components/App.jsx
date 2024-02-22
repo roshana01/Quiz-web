@@ -5,6 +5,7 @@ import Question from "./Question";
 import Error from "./Error";
 import Progress from "./Progress";
 import NextButton from "./NextButton";
+import Finish from "./Finish";
 
 const initialState = {
   questions: [],
@@ -13,13 +14,14 @@ const initialState = {
   index: 0,
   answer: null,
   points: 0,
+  hightScore: 0,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "getData":
       return { ...state, questions: action.payload, status: "ready" };
-      // field
+    // field
     case "errorField":
       return { ...state, status: "error" };
     case "start":
@@ -38,6 +40,20 @@ const reducer = (state, action) => {
       };
     case "next":
       return { ...state, index: state.index + 1, answer: null };
+    case "finishPage":
+      return {
+        ...state,
+        status: "finish",
+        hightScore:
+          state.points > state.hightScore ? state.points : state.hightScore, //copy
+      };
+
+    case "reStart":
+      return {
+        ...initialState,
+        status: "ready",
+        questions: state.questions,
+      };
     default:
       break;
   }
@@ -45,7 +61,7 @@ const reducer = (state, action) => {
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { questions, status, index, answer, points } = state;
+  const { questions, status, index, answer, points, hightScore } = state;
   const lengthQuestion = questions.length;
   const maxPoint = questions.reduce((acc, cur) => acc + cur.points, 0);
   // console.log(maxPoint);
@@ -86,8 +102,20 @@ export default function App() {
               answer={answer}
               dispatch={dispatch}
             />
-            <NextButton dispatch={dispatch} />
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              lengthQuestion={lengthQuestion}
+              index={index}
+            />
           </>
+        ) : status === "finish" ? (
+          <Finish
+            dispatch={dispatch}
+            maxPoint={maxPoint}
+            score={hightScore}
+            points={points}
+          />
         ) : (
           ""
         )}
