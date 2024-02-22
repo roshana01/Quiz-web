@@ -7,8 +7,7 @@ export default function NextButton({
   index,
 }) {
   if (answer === null) return null;
-  //console.log(lengthQuestion); //tedadeh soalat
-  // console.log(index);  // shomareh har soal
+
   if (index < lengthQuestion - 1) {
     return (
       <>

@@ -9,7 +9,6 @@ import Finish from "./Finish";
 
 const initialState = {
   questions: [],
-  //
   status: "loading",
   index: 0,
   answer: null,
@@ -21,7 +20,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "getData":
       return { ...state, questions: action.payload, status: "ready" };
-    // field
+   
     case "errorField":
       return { ...state, status: "error" };
     case "start":
@@ -64,7 +63,7 @@ export default function App() {
   const { questions, status, index, answer, points, hightScore } = state;
   const lengthQuestion = questions.length;
   const maxPoint = questions.reduce((acc, cur) => acc + cur.points, 0);
-  // console.log(maxPoint);
+
 
   useEffect(() => {
     (async () => {
@@ -119,10 +118,7 @@ export default function App() {
         ) : (
           ""
         )}
-        {/* <Loading /> */}
-        {/* <StartScreen /> */}
-        {/* <Question/> */}
-        {/* <Error /> */}
+       
       </div>
     </>
   );

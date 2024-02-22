@@ -2,18 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* @import url('https://fonts.googleapis.com/css2?family=Diplomata&family=Dongle&family=Raleway+Dots&display=swap') */
-
-
-/* *{
-  font-family: "Diplomata", serif;
-  font-weight: 400;
-  font-style: nor
-} */
 .loading-title {
   font-size: 20px;
-
 }
 
 .answer {
